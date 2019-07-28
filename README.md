@@ -1,1 +1,1 @@
-# bamboozled-again
+#[ModKit Wiki](../../wiki)

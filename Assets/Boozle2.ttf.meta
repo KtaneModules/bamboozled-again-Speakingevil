@@ -1,0 +1,22 @@
+fileFormatVersion: 2
+guid: d5b54cc0e8bd3f741a8f1f89260bf684
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: Boozle2
+  fontNames:
+  - Boozle2
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: bd3907d57b9a25f4993871d7edd5950e, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
