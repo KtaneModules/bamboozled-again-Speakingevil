@@ -120,12 +120,7 @@ public class BamboozledAgainScript : MonoBehaviour {
             }
             vals[0][i] = UnityEngine.Random.Range(0, message[0][i].Length);
             vals[1][i] = UnityEngine.Random.Range(0, 8);
-            vals[2][i] = UnityEngine.Random.Range(1, 27);
             vals[3][i] = UnityEngine.Random.Range(11, 17);
-            for(int j = 0; j < 4; j++)
-            {
-                strvals[j][i] = vals[j][i].ToString();
-            }
             List<char> rot = new List<char> { };
             for (int j = 0; j < message[0][i].Length; j++)
             {
@@ -135,18 +130,43 @@ public class BamboozledAgainScript : MonoBehaviour {
             message[1][i] = new string(rot.ToArray());
             message[2][i] = puncField[vals[1][i]] + message[1][i] + puncField[vals[1][i]];
             List<string> ciph = new List<string> { };
-            for (int j = 0; j < message[2][i].Length; j++)
+            int[] charcheck = new int[3] { 0, 0, 0 };
+            while ((charcheck[0] == 0 && charcheck[1] == 0) || (charcheck[1] == 0 && charcheck[2] == 0) || (charcheck[0] == 0 && charcheck[2] == 0))
             {
-                char symbol = message[2][i][j];
-                bool punc = puncField.Contains(symbol.ToString());
-                if (punc == true)
+                ciph.Clear();
+                vals[2][i] = UnityEngine.Random.Range(1, 27);
+                charcheck[0] = 0;
+                charcheck[1] = 0;
+                charcheck[2] = 0;
+                for (int j = 0; j < message[2][i].Length; j++)
                 {
-                    ciph.Add(puncField[(puncField.ToList().IndexOf(symbol.ToString()) + vals[2][i]) % 8]);
+                    char symbol = message[2][i][j];
+                    bool punc = puncField.Contains(symbol.ToString());
+                    if (punc == true)
+                    {
+                        ciph.Add(puncField[(puncField.ToList().IndexOf(symbol.ToString()) + vals[2][i]) % 8]);
+                    }
+                    else
+                    {
+                        ciph.Add("ABCDEFGHIJKLMNOPQRSTUVWXYZ"[("ABCDEFGHIJKLMNOPQRSTUVWXYZ".IndexOf(symbol) + vals[2][i]) % 26].ToString());
+                        if ("QWERTYUIOP".Contains(ciph[j]))
+                        {
+                            charcheck[0]++;
+                        }
+                        else if ("ASDFGHJKL".Contains(ciph[j]))
+                        {
+                            charcheck[1]++;
+                        }
+                        else if ("ZXCVBNM".Contains(ciph[j]))
+                        {
+                            charcheck[2]++;
+                        }
+                    }
                 }
-                else
-                {
-                    ciph.Add("ABCDEFGHIJKLMNOPQRSTUVWXYZ"[("ABCDEFGHIJKLMNOPQRSTUVWXYZ".IndexOf(message[2][i][j]) + vals[2][i]) % 26].ToString());
-                }
+            }
+            for (int j = 0; j < 4; j++)
+            {
+                strvals[j][i] = vals[j][i].ToString();
             }
             message[3][i] = String.Join(String.Empty, ciph.ToArray());
             int v = valField[textField.ToList().IndexOf(message[0][i])];
@@ -1064,15 +1084,15 @@ public class BamboozledAgainScript : MonoBehaviour {
                     objectID[(i % 2) + 4].material = objectColours[i];
                     yield return new WaitForSeconds(0.4f);
                 }
-                objectID[1].material = objectColours[0];
-                objectID[3].material = objectColours[0];
-                objectID[5].material = objectColours[0];
+                objectID[0].material = objectColours[0];
+                objectID[2].material = objectColours[0];
+                objectID[4].material = objectColours[0];
                 yield return new WaitForSeconds(0.4f);
                 for (int i = 0; i < 16; i++)
                 {
-                    objectID[i % 2].material = objectColours[Math.Min(i, 14)];
-                    objectID[(i % 2) + 2].material = objectColours[Math.Min(i, 14)];
-                    objectID[(i % 2) + 4].material = objectColours[Math.Min(i, 14)];
+                    objectID[1 - (i % 2)].material = objectColours[Math.Min(i, 14)];
+                    objectID[3 - (i % 2)].material = objectColours[Math.Min(i, 14)];
+                    objectID[5 - (i % 2)].material = objectColours[Math.Min(i, 14)];
                     yield return new WaitForSeconds(0.4f);
                 }
                 for (int i = 0; i < 17; i++)
